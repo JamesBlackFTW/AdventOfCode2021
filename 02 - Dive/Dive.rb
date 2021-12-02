@@ -1,26 +1,21 @@
 class Dive
   def initialize(input)
-    @input = input.split("
-")
+    @input = input.map { |string| string.split(' ') }
   end
 
   def run_course
     position = 0
     depth = 0
-    (0..@input.count).each { |i|
-      command = @input[i].to_s.split(" ")
-      step = command[0]
-      value = command[1]
-
+    @input.each do |step, value|
       case step
       when "forward"
-        position = position + value.to_f
+        position = position + value.to_i
       when "up"
-        depth = depth - value.to_f
+        depth = depth - value.to_i
       when "down"
-        depth = depth + value.to_f
+        depth = depth + value.to_i
       end
-    }
+    end
 
     p depth * position
   end
@@ -29,11 +24,7 @@ class Dive
     position = 0
     depth = 0
     aim = 0
-    (0..@input.count).each { |i|
-      command = @input[i].to_s.split(" ")
-      step = command[0]
-      value = command[1]
-
+    @input.each do |step, value|
       case step
       when "forward"
         position = position + value.to_f
@@ -43,7 +34,7 @@ class Dive
       when "down"
         aim = aim + value.to_f
       end
-    }
+    end
 
     p depth * position
   end

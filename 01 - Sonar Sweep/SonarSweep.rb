@@ -1,7 +1,6 @@
 class TestCase
   def initialize(input)
-    @input = input.split("
-")
+    @input = input
   end
 
   def count_depths
