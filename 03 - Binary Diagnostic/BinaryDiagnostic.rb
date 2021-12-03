@@ -1,17 +1,21 @@
 class BinaryDiagnosticMachine
   def initialize(input)
-    @input = input.map{|v| v.split("")}
-    @length = input[0].length-2
+    @input = input.split("\n")
+                  .map(&:chars)
   end
 
   def solve_simple_diagnostic
-    binaryString = ""
-    (0..@length).each { |i|
-      binaryString = binaryString + solve_most_popular_bit(@input, i)
-    }
+    binaryString = @input.transpose.map do | col |
+      zeros = col.select.count {|x| x == "0"}
+      if zeros > (col.count / 2)
+        "0"
+      else
+        "1"
+      end
+    end
 
-    gamma = binaryString.to_i(2)
-    epsilon = binaryString.gsub("0","2").gsub("1","0").gsub("2","1").to_i(2)
+    gamma = binaryString.join.to_i(2)
+    epsilon = gamma ^ (2**12 - 1)
 
     p gamma * epsilon
   end
@@ -25,7 +29,7 @@ class BinaryDiagnosticMachine
   private def solve_oxygen_diagnostic
     binaryString = @input
 
-    (0..@length).each { |i|
+    (0..@input.count).each { |i|
       mostPopular = solve_most_popular_bit(binaryString, i)
       binaryString = binaryString.select {|val| val[i] == mostPopular }
       if binaryString.length == 1
@@ -37,7 +41,7 @@ class BinaryDiagnosticMachine
   private def solve_carbon_diagnostic
     binaryString = @input
 
-    (0..@length).each { |i|
+    (0..@input.count).each { |i|
       leastPopular = solve_least_popular_bit(binaryString, i)
       binaryString = binaryString.select {|val| val[i] == leastPopular }
       if binaryString.length == 1
