@@ -1,16 +1,4 @@
-class Instruction
-  def initialize(line)
-    data = line.split("|")
-    @signalPattern = data[0].split(" ")
-    @output = data[1].split(" ")
-  end
-
-  def count_unique_length_values
-    @output.select { |x|
-      (x.length == 2 || x.length == 3 || x.length == 4 || x.length == 7)
-    }.count
-  end
-end
+require_relative 'Instruction.rb'
 
 class SegmentSelector
   def initialize(input)
@@ -23,6 +11,12 @@ class SegmentSelector
   def count_unique_length_values
     @data.map do |instruction|
       instruction.count_unique_length_values
+    end.sum
+  end
+
+  def get_full_number
+    @data.map do |instruction|
+      instruction.get_full_number
     end.sum
   end
 end
